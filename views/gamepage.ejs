@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include head.ejs%>
+<body>
+
+    <%- include navbar.ejs %>
+
+    <div class="container">
+        <header class="jumbotron hero-spacer jumbheader">
+            <h1><%= name %></h1>
+            <p>Check the current trending clips from <%= name %> and bookmark the ones you love !</p>
+        </header>
+
+        <hr class="splitTitle">
+
+        <div class="row text-center">
+        	 <% clips.forEach(function(clip, index) { %>
+        		<div class="col-md-6 hero-feature clipbox">
+                <div class="thumbnail row">
+                    <iframe frameborder="0" class="col-md-12 iframeclip" scrolling="no" allowfullscreen="true" src="<%= urls[index]%>" style="margin-top: 3%;">
+                    </iframe>
+                     <div class="caption">
+                        <p class="clipTitle"><b><%= clip.title%></b></p>
+                        <!--
+                        <form action="/bookmark" method="POST">
+                            <input type="text" name="newID" placeholder="Enter your ID"/>
+                            <input type="submit" value="Click here to submit the form"/>
+                        </form>
+                    -->
+                        <p>
+                            <a href="#" class="btn btnTwontage">Bookmark this clip</a> <a href="#" class="btn btn-default">Visit channel</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+    		<% }); %>
+
+            <%- include footer.ejs %>
+        </div>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include head.ejs%>
+<body>
+	<%- include navbar.ejs %>
+
+    <div class="container">
+        <header class="jumbotron hero-spacer jumbheader">
+            <h1>Welcome to Twontage!</h1>
+            <p>Twontage is a powerfull tool that will allow you to easily create your own videos from twitch clips !</p>
+        </header>
+
+        <hr class="splitTitle">
+
+         <div class="row text-center">
+        	 <% gamelist.forEach(function(game, index) { %>
+        		<div class="col-md-3 hero-feature gamebox">
+                <div class="thumbnail row">
+                	<img src="<%= game.game.box.medium%>" alt="..." class="img-thumbnail gameimg">
+                	<p class="gamename"> <b> <%= game.game.name%> </b></p>
+                	<p><%= game.viewers%> Viewers</p>
+                	<a class="btn btnTwontage" style="margin-bottom: 4%;" 
+                	href="http://localhost:3000/gamepage/<%= game.game.name%>"> Check latest clips</a>
+                </div>
+            </div>
+    		<% }); %>
+    	<%- include footer.ejs %>
+    </div>
+</body>
+</html>
