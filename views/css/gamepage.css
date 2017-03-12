@@ -1,0 +1,23 @@
+.iframeclip
+{
+	height: 350px;
+}
+
+.clipbox
+{
+	padding: 2% 2% 2% 2%;
+}
+
+.gamebox
+{
+	padding: 2% 2% 2% 2%;
+	color: black;
+}
+
+.clipTitle
+{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: bold;
+}

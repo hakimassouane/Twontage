@@ -3,8 +3,13 @@ var app = express();
 var request = require('request');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
 var databaseURL = 'mongodb://hakim:leboss93@ds115110.mlab.com:15110/hakimlab';
+var ejs = require('ejs')
+  , moment = require('moment');
+
+app.locals.fromNow = function(date){
+  return moment(date).fromNow();
+}
 
 mongoose.connect(databaseURL, function(err) {
   if (err) { throw err; }
@@ -20,7 +25,6 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 
 
-
 app.get('/', function(req, res){
 	var options = {
   		url: 'https://api.twitch.tv/kraken/games/top?limit=12',
@@ -31,11 +35,7 @@ app.get('/', function(req, res){
 	request(options, function(error, response, body){
 		if (!error && response.statusCode == 200) {
 			result = JSON.parse(body);
-
 			console.log(result.top);
-			/*result.top.forEach(function(game){
-				console.log("Game name is ---->", game.game.name);
-			});*/
 			res.render('index', {gamelist: result.top});
 		}
 	});

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include head.ejs%>
+<head>
+    <%- include head.ejs%>
+    <link rel="stylesheet" href="/views/css/gamepage.css">
+</head>
 <body>
-
     <%- include navbar.ejs %>
 
     <div class="container">
@@ -17,18 +19,22 @@
         	 <% clips.forEach(function(clip, index) { %>
         		<div class="col-md-6 hero-feature clipbox">
                 <div class="thumbnail row">
-                    <iframe frameborder="0" class="col-md-12 iframeclip" scrolling="no" allowfullscreen="true" src="<%= urls[index]%>" style="margin-top: 3%;">
-                    </iframe>
+                    <div class="row">
+                        <iframe frameborder="0" class="col-md-12 iframeclip" scrolling="no" allowfullscreen="true" 
+                        src="<%= urls[index]%>">
+                        </iframe>
+                    </div>
                      <div class="caption">
-                        <p class="clipTitle"><b><%= clip.title%></b></p>
-                        <!--
-                        <form action="/bookmark" method="POST">
-                            <input type="text" name="newID" placeholder="Enter your ID"/>
-                            <input type="submit" value="Click here to submit the form"/>
-                        </form>
-                    -->
+                        <p class="clipTitle"><%= clip.title%></p>
+                        <span class="created_at"> 
+                        Created <%= fromNow(clip.created_at) %>,
+                        by <%= clip.curator.display_name%>
+                        (<%= clip.views%> views)
+                        </span>
                         <p>
-                            <a href="#" class="btn btnTwontage">Bookmark this clip</a> <a href="#" class="btn btn-default">Visit channel</a>
+                            <a href="#" class="btn btnTwontage">Bookmark this clip</a> 
+                            <a href="<%= clip.broadcaster.channel_url%>" target="_blank" 
+                            class="btn ">Visit channel</a>
                         </p>
                     </div>
                 </div>
@@ -37,6 +43,14 @@
 
             <%- include footer.ejs %>
         </div>
+    </div>
 </body>
+
+                        <!-- form for posting bookmark
+                        <form action="/bookmark" method="POST">
+                            <input type="text" name="newID" placeholder="Enter your ID"/>
+                            <input type="submit" value="Click here to submit the form"/>
+                        </form>
+                    -->
 
 </html>
