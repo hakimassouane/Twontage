@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include includes/head.ejs%>
+    <link rel="stylesheet" href="/views/css/index.css">
+</head>
+<body>
+	<%- include includes/navbar.ejs %>
+
+    <div class="container">
+        <header class="jumbotron hero-spacer jumbheader">
+            <h1>Welcome to Twontage!</h1>
+            <p>Twontage is a powerfull tool that will allow you to easily create your own videos from twitch clips !</p>
+        </header>
+
+        <hr class="splitTitle">
+
+         <div class="row text-center">
+        	 <% gamelist.forEach(function(game, index) { %>
+        		<div class="col-md-3 hero-feature gamebox">
+                <div class="thumbnail row">
+                	<img src="<%= game.game.box.medium%>" alt="..." class="img-thumbnail gameimg">
+                	<p class="gamename"> <b> <%= game.game.name%> </b></p>
+                	<p><%= game.viewers%> Viewers</p>
+                	<a class="btn btnTwontage" style="margin-bottom: 4%;" 
+                	href="http://localhost:3000/gamepage/<%= game.game.name%>"> Check latest clips</a>
+                </div>
+            </div>
+    		<% }); %>
+    	<%- include includes/footer.ejs %>
+    </div>
+</body>
+</html>
+
+
+
+
+
+GAMEPAGE
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include includes/head.ejs%>
+    <link rel="stylesheet" href="/views/css/gamepage.css">
+    <link href="views/css/index.css" rel="stylesheet">
+</head>
+<body>
+    <%- include includes/navbar.ejs %>
+
+    <div class="container">
+        <header class="jumbotron hero-spacer jumbheader">
+            <h1><%= name %></h1>
+            <p>Check the current trending clips from <%= name %> and bookmark the ones you love !</p>
+        </header>
+
+        <hr class="splitTitle">
+
+        <div class="row text-center">
+             <% clips.forEach(function(clip, index) { %>
+                <div class="col-md-6 hero-feature clipbox">
+                <div class="thumbnail row">
+                    <div class="row">
+                        <iframe frameborder="0" class="col-md-12 iframeclip" scrolling="no" allowfullscreen="true" 
+                        src="<%= urls[index]%>">
+                        </iframe>
+                    </div>
+                     <div class="caption">
+                        <p class="clipTitle"><%= clip.title%></p>
+                        <span class="created_at"> 
+                        Created <%= fromNow(clip.created_at) %>,
+                        by <%= clip.curator.display_name%>
+                        (<%= clip.views%> views)
+                        </span>
+                        <p>
+                            <a href="#" class="btn btnTwontage">Bookmark this clip</a> 
+                            <a href="<%= clip.broadcaster.channel_url%>" target="_blank" 
+                            class="btn ">Visit channel</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+
+            <%- include includes/footer.ejs %>
+        </div>
+    </div>
+</body>
+</html>

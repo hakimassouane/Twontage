@@ -66,7 +66,7 @@ app.get('/', function(req, res){
 app.get('/gamepage/:gamename', function(req, res){
 	var gamename = req.params.gamename;
 	var options = {
-  		url: 'https://api.twitch.tv/kraken/clips/top?limit=10&game=' + gamename + '&trending=true',
+  		url: 'https://api.twitch.tv/kraken/clips/top?limit=12&game=' + gamename + '&trending=true',
   		headers: {
   		'Client-ID': '7m12f7tzdcfgluzt537v3yo66j6lno',
   		'Accept': 'application/vnd.twitchtv.v4+json'}
@@ -87,7 +87,7 @@ app.get('/gamepage/:gamename', function(req, res){
 })
 
 app.post('/bookmark', function(req, res){
-	
+	console.log("bookmark is requested");
 });
 
 var server = app.listen(3000, function(){

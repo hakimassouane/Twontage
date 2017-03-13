@@ -1,33 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include includes/head.ejs%>
-    <link rel="stylesheet" href="/views/css/index.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Twontage</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="views/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="views/css/mdb.min.css" rel="stylesheet">
+    <link href="views/css/main.css" rel="stylesheet">
+    <link href="views/css/index.css" rel="stylesheet">
 </head>
+
 <body>
-	<%- include includes/navbar.ejs %>
 
-    <div class="container">
-        <header class="jumbotron hero-spacer jumbheader">
-            <h1>Welcome to Twontage!</h1>
-            <p>Twontage is a powerfull tool that will allow you to easily create your own videos from twitch clips !</p>
-        </header>
-
-        <hr class="splitTitle">
-
-         <div class="row text-center">
-        	 <% gamelist.forEach(function(game, index) { %>
-        		<div class="col-md-3 hero-feature gamebox">
-                <div class="thumbnail row">
-                	<img src="<%= game.game.box.medium%>" alt="..." class="img-thumbnail gameimg">
-                	<p class="gamename"> <b> <%= game.game.name%> </b></p>
-                	<p><%= game.viewers%> Viewers</p>
-                	<a class="btn btnTwontage" style="margin-bottom: 4%;" 
-                	href="http://localhost:3000/gamepage/<%= game.game.name%>"> Check latest clips</a>
-                </div>
+    <!--Navbar-->
+    <nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar">
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <strong>Twontage</strong>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav1">
+                
+                <ul class="navbar-nav mr-auto">
+                    <!--
+                    <li class="nav-item active">
+                        <a class="nav-link">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Pricing</a>
+                    </li>
+                      -->
+                </ul>
+              
+                <form class="form-inline waves-effect waves-light">
+                     <a class="nav-link">Login <i class="fa fa-user" aria-hidden="true"></i></a>
+                      <a class="nav-link">Sign up <i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                     
+                    <!-- <input class="form-control" type="text" placeholder="Search">-->
+                </form>
             </div>
-    		<% }); %>
-    	<%- include includes/footer.ejs %>
+        </div>
+    </nav>
+    <!--/.Navbar-->
+    
+    <!--Mask-->
+    <div class="view hm-black-strong">
+        <div class="full-bg-img flex-center">
+            <ul>
+                <li>
+                    <h1 class="h1-responsive wow fadeInDown" data-wow-delay="0.2s">Twontage</h1></li>
+                <li>
+                    <p class="wow fadeInDown">Twontage is a powerfull tool that will allow you to easily create your own videos from twitch clips !</p>
+                </li>
+                <li>
+                    <!-- <a target="_blank" href="http://mdbootstrap.com/getting-started/" class="btn btn-primary btn-lg wow fadeInLeft" data-wow-delay="0.2s">Sign up!</a> -->
+                    <a id="scrolltogames" class="btn btn-default btn-lg wow fadeInRight" data-wow-delay="0.2s">Pick your game !</a>
+                </li>
+            </ul>
+        </div>
     </div>
+    <!--/.Mask-->
+
+    <!-- Main container-->
+    <div class="container" id="gameslist">
+
+        <div class="divider-new">
+            <h2 class="h2-responsive wow fadeInDown">Games</h2>
+        </div>
+
+        <!--Section: Best features-->
+        <section id="best-features">
+
+            <div class="row">
+
+                <% gamelist.forEach(function(game, index) { %>
+                <!--First columnn-->
+                <div class="col-lg-3">
+                    <!--Card-->
+                    <div class="card wow fadeInUp gamebox">
+
+                        <!--Card image-->
+                        <div class="view overlay hm-white-slight">
+                            <img src="<%= game.game.box.large%>" class="img-fluid" alt="">
+                            <a href="http://localhost:3000/gamepage/<%= game.game.name%>">
+                                <div class="mask"></div>
+                            </a>
+                        </div>
+                        <!--/.Card image-->
+
+                        <!--Card content-->
+                        <div class="card-block text-center">
+                            <!--Title-->
+                            <h4 class="card-title gamename"><%= game.game.name%> </h4>
+                            <hr>
+                            <!--Text-->
+                            <p class="card-text gamecounts"><%= game.viewers%> Viewers | <%= game.channels%> Channels</p>
+                        </div>
+                        <!--/.Card content-->
+
+                    </div>
+                    <!--/.Card-->
+                </div>
+                <!--First columnn-->
+                <% }); %>
+
+            </div>
+
+        </section>
+        <!--/Section: Best features-->
+    </div>
+    <!--/ Main container-->
+
+
+    <%-include includes/footer.ejs%>
+
+
+
+    <!-- SCRIPTS -->
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="views/js/jquery-2.2.3.min.js"></script>
+
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="views/js/tether.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="views/js/bootstrap.min.js"></script>
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="views/js/mdb.min.js"></script>
+
+    <script type="text/javascript" src="views/js/index.js"></script>
+
+    <!-- Animations init-->
+    <script>
+        new WOW().init();
+    </script>
+
+
 </body>
+
 </html>

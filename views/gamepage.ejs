@@ -1,56 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include includes/head.ejs%>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Twontage</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../views/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="../views/css/mdb.min.css" rel="stylesheet">
+
+    <link href="../views/css/main.css" rel="stylesheet">
+    <link href="../views/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="/views/css/gamepage.css">
+    
 </head>
 <body>
-    <%- include includes/navbar.ejs %>
+     <!--Navbar-->
+    <nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar navbar-twontage">
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="http://localhost:3000/">
+                <strong>Twontage</strong>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav1">
+                
+                <ul class="navbar-nav mr-auto">
 
-    <div class="container">
-        <header class="jumbotron hero-spacer jumbheader">
-            <h1><%= name %></h1>
-            <p>Check the current trending clips from <%= name %> and bookmark the ones you love !</p>
-        </header>
-
-        <hr class="splitTitle">
-
-        <div class="row text-center">
-        	 <% clips.forEach(function(clip, index) { %>
-        		<div class="col-md-6 hero-feature clipbox">
-                <div class="thumbnail row">
-                    <div class="row">
-                        <iframe frameborder="0" class="col-md-12 iframeclip" scrolling="no" allowfullscreen="true" 
-                        src="<%= urls[index]%>">
-                        </iframe>
-                    </div>
-                     <div class="caption">
-                        <p class="clipTitle"><%= clip.title%></p>
-                        <span class="created_at"> 
-                        Created <%= fromNow(clip.created_at) %>,
-                        by <%= clip.curator.display_name%>
-                        (<%= clip.views%> views)
-                        </span>
-                        <p>
-                            <a href="#" class="btn btnTwontage">Bookmark this clip</a> 
-                            <a href="<%= clip.broadcaster.channel_url%>" target="_blank" 
-                            class="btn ">Visit channel</a>
-                        </p>
-                    </div>
-                </div>
+                </ul>
+              
+                <form class="form-inline waves-effect waves-light">
+                    <input class="form-control" type="text" placeholder="Search">
+                </form>
             </div>
-    		<% }); %>
+        </div>
+    </nav>
+    <!--/.Navbar-->
 
-            <%- include includes/footer.ejs %>
+    <div class="jumbotron jumbotron-fluid jumbotron-twontage text-center">
+        <div class="container">
+            <h1 class="h1-responsive wow fadeInDown"><%= name %></h1>
+            <p class="wow fadeInDown">Watch clips from <%= name %> and bookmark the ones you like !</p>
         </div>
     </div>
+
+
+ <!-- Main container-->
+    <div class="container-fluid">
+
+
+        <!--Section: Best features-->
+        <section id="best-features">
+
+            <div class="row">
+
+                 <% clips.forEach(function(clip, index) { %>
+                <!--First columnn-->
+                <div class="col-lg-4">
+                    <!--Card-->
+                    <div class="card wow fadeInUp gamebox">
+
+                        <!--Card image-->
+                        <div class="overlay hm-white-slight">
+                            <iframe frameborder="0" class="col-md-12 iframeclip" scrolling="no" allowfullscreen="true" src="<%= urls[index]%>">
+                            </iframe>
+                        </div>
+                        <!--/.Card image-->
+
+                        <!--Card content-->
+                        <div class="card-block text-center">
+                            <!--Title-->
+                            <h4 class="card-title gamename"><%= clip.title%></h4>
+
+
+                            <hr>
+                            <!--Text-->
+                                <div class="call-to-action">
+                                <!-- pass the whole object to the post request -->
+                                <a class="btn btn-info btn-bookmark" value="<%= clip %>">Bookmark</a>
+                                <a class="btn btn-default" href="<%= clip.broadcaster.channel_url %>" target="_blank">Visit channel</a>
+                            </div>
+                            
+                             <p class="card-text gamecounts">  
+                                <span class="created_at"> 
+                                Created <%= fromNow(clip.created_at) %>,
+                                by <%= clip.curator.display_name%>
+                                (<%= clip.views%> views)
+                                </span>
+                            </p>
+                        </div>
+                        <!--/.Card content-->
+
+                    </div>
+                    <!--/.Card-->
+                </div>
+                <!--First columnn-->
+                <% }); %>
+
+
+            </div>
+
+        </section>
+        <!--/Section: Best features-->
+    </div>
+    <!--/ Main container-->
+
+     <%-include includes/footer.ejs%>
+
 </body>
+<!-- JQuery -->
+<script type="text/javascript" src="../views/js/jquery-2.2.3.min.js"></script>
 
-                        <!-- form for posting bookmark
-                        <form action="/bookmark" method="POST">
-                            <input type="text" name="newID" placeholder="Enter your ID"/>
-                            <input type="submit" value="Click here to submit the form"/>
-                        </form>
-                    -->
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="../views/js/tether.min.js"></script>
 
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="../views/js/bootstrap.min.js"></script>
+
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="../views/js/mdb.min.js"></script>
+
+<script type="text/javascript" src="../views/js/gamepage.js"></script>
+
+<!-- Animations init-->
+    <script>
+        new WOW().init();
+    </script>
 </html>
