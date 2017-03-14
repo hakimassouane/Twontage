@@ -7,12 +7,12 @@
 
     <title>Twontage</title>
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="../views/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Material Design Bootstrap -->
     <link href="../views/css/mdb.min.css" rel="stylesheet">
-
     <link href="../views/css/main.css" rel="stylesheet">
     <link href="../views/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="/views/css/gamepage.css">
@@ -29,13 +29,12 @@
                 <strong>Twontage</strong>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav1">
-                
                 <ul class="navbar-nav mr-auto">
-
                 </ul>
-              
                 <form class="form-inline waves-effect waves-light">
-                    <input class="form-control" type="text" placeholder="Search">
+                    <a class="nav-link">Login <i class="fa fa-user" aria-hidden="true"></i></a>
+                    <a class="nav-link">Sign up <i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                    <!-- <input class="form-control" type="text" placeholder="Search"> -->
                 </form>
             </div>
         </div>
@@ -52,6 +51,31 @@
 
  <!-- Main container-->
     <div class="container-fluid">
+
+        <section id="filters">
+            <div class="row">
+                <form class="form-inline filter-form">
+                     <!--<label class="mr-sm-2" for="inlineFormCustomSelect">Langage</label>
+                      <select class="custom-select  mr-sm-2" id="inlineFormCustomSelect">
+                        <option selected>Any langage</option>
+                        <option value="1">Français</option>
+                        <option value="2">English</option>
+                        <option value="3">한국어</option>
+                      </select>
+                    -->
+                    <div class="md-form form-group">
+                        <input type="text"  class="form-control validate">
+                        <label  data-error="wrong" data-success="right">Look for a channel</label>
+                    </div>
+
+                    <div class="md-form form-group">
+                        <a href="" class="btn btn-primary btn-lg">Submit</a>
+                    </div>
+                </form>
+
+
+            </div>
+        </section>
 
 
         <!--Section: Best features-->
@@ -77,14 +101,13 @@
                             <!--Title-->
                             <h4 class="card-title gamename"><%= clip.title%></h4>
 
-
                             <hr>
                             <!--Text-->
                                 <div class="call-to-action">
-                                <!-- pass the whole object to the post request -->
-                                <a class="btn btn-info btn-bookmark" value="<%= clip %>">Bookmark</a>
-                                <a class="btn btn-default" href="<%= clip.broadcaster.channel_url %>" target="_blank">Visit channel</a>
-                            </div>
+                                    <!-- pass the whole object to the post request -->
+                                    <a class="btn btn-info btn-bookmark"  data-clipinfo="<%= JSON.stringify(clip) %>" value="">Bookmark</a>
+                                    <a class="btn btn-default" href="<%= clip.broadcaster.channel_url %>" target="_blank">Visit channel</a>
+                                </div>
                             
                              <p class="card-text gamecounts">  
                                 <span class="created_at"> 

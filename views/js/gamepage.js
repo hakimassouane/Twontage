@@ -1,12 +1,10 @@
  $('.btn-bookmark').click(function() {
- 	/*
- 	console.log($(this).attr("value"));
+ 	var buttondata = $(this).data('clipinfo');
  	$.post("http://localhost:3000/bookmark",
     {
-        clipObject : $(this).attr("value")
+        clipObject : buttondata
     },
     function(data, status){
-    	alert("The clip was succesfully bookmarked");
-        //alert($(this).attr("value"));
-    });*/
+    	console.log("The clip was succesfully bookmarked");
+    });
 });
