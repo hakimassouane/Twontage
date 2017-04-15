@@ -44,7 +44,7 @@ app.get('/', function(req, res){
 app.get('/gamepage/:gamename', function(req, res){
 	var gamename = req.params.gamename;
 	var options = {
-  		url: 'https://api.twitch.tv/kraken/clips/top?limit=5&game=' + gamename,
+  		url: 'https://api.twitch.tv/kraken/clips/top?limit=20&game=' + gamename,
   		headers: {
   		'Client-ID': '7m12f7tzdcfgluzt537v3yo66j6lno',
   		'Accept': 'application/vnd.twitchtv.v4+json'}
