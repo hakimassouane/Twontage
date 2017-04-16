@@ -1,25 +1,13 @@
-var app = angular.module('gamepageApp', []);
-
-app.factory("requestFactory", function($http){
-	 return {
-        getClipList: function(gameName) {
-			var options = {
-			  		headers: {
-			  		'Client-ID': '7m12f7tzdcfgluzt537v3yo66j6lno',
-			  		'Accept': 'application/vnd.twitchtv.v4+json'}
-				};
-            return $http.get('https://api.twitch.tv/kraken/clips/top?game=' + gameName, options);
-        }
-    };
-});
+var app = angular.module('gamepageApp', ['requestModule']);
 
 app.controller('clipListCtrl', function($scope, $location, requestFactory) {
-	$scope.gameName = $location.absUrl().substring($location.absUrl().lastIndexOf("/") + 1);
+	var urlGameName = $location.absUrl().substring($location.absUrl().lastIndexOf("/") + 1);
+	$scope.gameName = urlGameName.replace(/%20/g, ' ');
 	init();
 	
 	function init () {
 		$scope.listOfClips = [];
-		makeRequest($scope.gameName);
+		makeRequest(urlGameName, '');
 	};
 
 	$scope.handleClick = function (isBtnPressed) {
@@ -27,24 +15,28 @@ app.controller('clipListCtrl', function($scope, $location, requestFactory) {
 			loadMoreOnClick();
 	}
 
-	function makeRequest(gameName) {
-		var promise = requestFactory.getClipList(gameName);
+	function makeRequest(gameName, filters) {
+		var promise = requestFactory.getClipList(gameName, filters);
 		promise.then(function(res) { 
 			console.log(res);
-			console.log(res.data.clips);
-			$scope.listOfClips = res.data.clips;
+			res.data.clips.forEach(function(element) {
+  				$scope.listOfClips.push(element);
+			});
+			cursor = '&cursor=' + res.data._cursor;
+			console.log($scope.listOfClips);
 		},
 		function(errorPayload) {
-			$log.error('failure loading movie', errorPayload);
+			console.log('failure loading request', errorPayload);
 		});
 	}
 	
 	function loadMoreOnClick()
 	{
-		makeRequest(lazyNext);
+		makeRequest(urlGameName, cursor);
 	}
-});
 
+
+});
 
 app.directive('clips', function(){
     return {
@@ -54,8 +46,16 @@ app.directive('clips', function(){
     }
 })
 
+//Filter to allow request to distant website as trusted
 app.filter('trusted', ['$sce', function ($sce) {
     return function(url) {
         return $sce.trustAsResourceUrl(url);
     };
 }]);
+
+
+app.filter('timesince', function ($filter) {
+  return function (input) {
+  		return moment(input).fromNow();
+  };
+});

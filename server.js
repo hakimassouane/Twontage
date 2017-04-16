@@ -75,4 +75,5 @@ app.post('/bookmark', function(req, res){
 });
 
 var server = app.listen(3000, function(){
+	console.log("App launched listening on port : 3000")
 });

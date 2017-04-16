@@ -1,21 +1,4 @@
-var app = angular.module('indexApp', []);
-
-app.factory("requestFactory", function($http){
-	 return {
-        getGameList: function(offset) {
-        	var options = 
-        	{ 
-				headers: 
-				{ 
-        			'Client-ID': '7m12f7tzdcfgluzt537v3yo66j6lno',
-  					'Accept': 'application/vnd.twitchtv.v4+json'
-  				}
-        	}
-        	console.log("the url is ------ >   " + 'https://api.twitch.tv/kraken/games/top?limit=12' + offset);
-            return $http.get('https://api.twitch.tv/kraken/games/top?limit=12' + offset, options);
-        }
-    };
-});
+var app = angular.module('indexApp', ['requestModule']);
 
 app.controller('gameListCtrl', function($scope, requestFactory) {
 	var lazyNext = '';
@@ -24,11 +7,12 @@ app.controller('gameListCtrl', function($scope, requestFactory) {
 	$scope.handleClick = function (isBtnPressed) {
 		if (isBtnPressed)
 			loadMoreOnClick();
-	}
+	};
 
 	function initPage() {
 		$scope.listOfGames = [];
 		makeRequest('');
+		console.log(requestFactory);
 	};
 
 	function makeRequest(offset) {
@@ -41,12 +25,11 @@ app.controller('gameListCtrl', function($scope, requestFactory) {
 			lazyNext = res.data._links.next.substring(res.data._links.next.indexOf('&'));
 		},
 		function(errorPayload) {
-			$log.error('failure loading movie', errorPayload);
+			console.log('failure loading request', errorPayload);
 		});
 	}
 	
-	function loadMoreOnClick()
-	{
+	function loadMoreOnClick() {
 		makeRequest(lazyNext);
-	}
+	};
 });

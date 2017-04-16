@@ -52,32 +52,23 @@
 
  <!-- Main container-->
     <div class="container-fluid">
-
         <section id="filters">
-            <div class="row">
-                <form class="form-inline filter-form">
-                     <!--<label class="mr-sm-2" for="inlineFormCustomSelect">Langage</label>
-                      <select class="custom-select  mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Any langage</option>
-                        <option value="1">Français</option>
-                        <option value="2">English</option>
-                        <option value="3">한국어</option>
-                      </select>
-                    -->
-                    <div class="md-form form-group">
-                        <input type="text"  class="form-control validate">
-                        <label  data-error="wrong" data-success="right">Look for a channel</label>
-                    </div>
-
-                    <div class="md-form form-group">
-                        <a href="" class="btn btn-primary btn-lg">Submit</a>
-                    </div>
-                </form>
-
-
-            </div>
+            <!--<form class="form-inline col-md-4 col-md-offset-4">
+              <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
+              <select class="custom-select  mr-sm-2 " id="inlineFormCustomSelect">
+                <option selected>Choose...</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+              <label class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Remember my preference</span>
+              </label>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>-->
         </section>
-
 
         <!--Section: Best features-->
         <section id="best-features">
@@ -108,7 +99,7 @@
                              <p class="card-text gamecounts">  
                                 <span class="created_at"> 
                                     <!-- may wanna implement own filter here -->
-                                Created {{clip.created_at | date: 'yyyy-MM-dd HH:mm'}},
+                                Created {{clip.created_at | timesince}},
                                 by {{clip.curator.display_name}}
                                 ({{clip.views}} views)
                                 </span>
@@ -126,6 +117,9 @@
 
         </section>
         <!--/Section: Best features-->
+        <div>
+            <a class="btn btn-info text-center btn-bookmark col-lg-12" ng-click="handleClick(true)">Load More</a>
+        </div>
     </div>
     <!--/ Main container-->
 
@@ -148,6 +142,10 @@
 <script type="text/javascript" src="../views/js/mdb.min.js"></script>
 
 <script type="text/javascript" src="../views/js/gamepage.js"></script>
+
+<script type="text/javascript" src="../../node_modules/moment/moment.js"></script>
+
+<script type="text/javascript" src="../views/js/requestmodule.js"></script>
 
 <script type="text/javascript" src="../views/js/gamepageapp.js"></script>
 
