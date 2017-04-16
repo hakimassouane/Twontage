@@ -11,14 +11,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="../views/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/views/css/gamepage.css">
     <!-- Material Design Bootstrap -->
     <link href="../views/css/mdb.min.css" rel="stylesheet">
     <link href="../views/css/main.css" rel="stylesheet">
     <link href="../views/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="/views/css/gamepage.css">
+    
     
 </head>
-<body>
+<body ng-app="gamepageApp" ng-controller="clipListCtrl">
      <!--Navbar-->
     <nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar navbar-twontage">
         <div class="container">
@@ -43,8 +44,8 @@
 
     <div class="jumbotron jumbotron-fluid jumbotron-twontage text-center">
         <div class="container">
-            <h1 class="h1-responsive wow fadeInDown"><%= name %></h1>
-            <p class="wow fadeInDown">Watch clips from <%= name %> and bookmark the ones you like !</p>
+            <h1 class="h1-responsive wow fadeInDown">{{gameName}}<!--<%= name %> --></h1>
+            <p class="wow fadeInDown">Watch clips from {{gameName}} and bookmark the ones you like !</p>
         </div>
     </div>
 
@@ -83,37 +84,33 @@
 
             <div class="row">
 
-                 <% clips.forEach(function(clip, index) { %>
                 <!--First columnn-->
-                <div class="col-lg-4">
+                <div class="col-lg-4" ng-repeat="clip in listOfClips track by $index">
                     <!--Card-->
                     <div class="card wow fadeInUp gamebox">
-
                         <!--Card image-->
-                        <div class="overlay hm-white-slight">
-                            <iframe frameborder="0" class="col-md-12 iframeclip" scrolling="no" allowfullscreen="true" src="<%= urls[index]%>">
-                            </iframe>
+                        <div class="overlay hm-white-slight clip-container" data-clips>
                         </div>
                         <!--/.Card image-->
-
                         <!--Card content-->
                         <div class="card-block text-center">
                             <!--Title-->
-                            <h4 class="card-title gamename"><%= clip.title%></h4>
+                            <h4 class="card-title gamename">{{clip.title}}</h4>
 
                             <hr>
                             <!--Text-->
                                 <div class="call-to-action">
                                     <!-- pass the whole object to the post request -->
-                                    <a class="btn btn-info btn-bookmark"  data-clipinfo="<%= JSON.stringify(clip) %>" value="">Bookmark</a>
-                                    <a class="btn btn-default" href="<%= clip.broadcaster.channel_url %>" target="_blank">Visit channel</a>
+                                    <a class="btn btn-info btn-bookmark"  data-clipinfo="JSON.stringify(clip)" value="">Bookmark</a>
+                                    <a class="btn btn-default" href="{{clip.broadcaster.channel_url}}" target="_blank">Visit channel</a>
                                 </div>
                             
                              <p class="card-text gamecounts">  
                                 <span class="created_at"> 
-                                Created <%= fromNow(clip.created_at) %>,
-                                by <%= clip.curator.display_name%>
-                                (<%= clip.views%> views)
+                                    <!-- may wanna implement own filter here -->
+                                Created {{clip.created_at | date: 'yyyy-MM-dd HH:mm'}},
+                                by {{clip.curator.display_name}}
+                                ({{clip.views}} views)
                                 </span>
                             </p>
                         </div>
@@ -123,7 +120,6 @@
                     <!--/.Card-->
                 </div>
                 <!--First columnn-->
-                <% }); %>
 
 
             </div>
@@ -133,11 +129,14 @@
     </div>
     <!--/ Main container-->
 
-     <%-include includes/footer.ejs%>
+    <div ng-include src="'../views/includes/footer.html'"></div>
 
 </body>
 <!-- JQuery -->
 <script type="text/javascript" src="../views/js/jquery-2.2.3.min.js"></script>
+
+<!-- AngularJs CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="../views/js/tether.min.js"></script>
@@ -149,6 +148,8 @@
 <script type="text/javascript" src="../views/js/mdb.min.js"></script>
 
 <script type="text/javascript" src="../views/js/gamepage.js"></script>
+
+<script type="text/javascript" src="../views/js/gamepageapp.js"></script>
 
 <!-- Animations init-->
     <script>
