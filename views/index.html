@@ -12,13 +12,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="views/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Material Design Bootstrap -->
     <link href="views/css/mdb.min.css" rel="stylesheet">
     <link href="views/css/main.css" rel="stylesheet">
     <link href="views/css/index.css" rel="stylesheet">
 </head>
 
-<body>
+<body ng-app="indexApp">
 
     <!--Navbar-->
     <nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar">
@@ -26,23 +27,13 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="#">
                 <strong>Twontage</strong>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav1">
                 
                 <ul class="navbar-nav mr-auto">
-                    <!--
-                    <li class="nav-item active">
-                        <a class="nav-link">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">Pricing</a>
-                    </li>
-                      -->
+
                 </ul>
               
                 <form class="form-inline waves-effect waves-light">
@@ -75,7 +66,7 @@
     <!--/.Mask-->
 
     <!-- Main container-->
-    <div class="container" id="gameslist">
+    <div class="container" id="gameslist" ng-controller="gameListCtrl">
 
         <div class="divider-new">
             <h2 class="h2-responsive wow fadeInDown">Games</h2>
@@ -86,16 +77,15 @@
 
             <div class="row">
 
-                <% gamelist.forEach(function(game, index) { %>
                 <!--First columnn-->
-                <div class="col-lg-3">
+                <div class="col-lg-3" ng-repeat="game in listOfGames track by $index">
                     <!--Card-->
                     <div class="card wow fadeInUp gamebox">
 
                         <!--Card image-->
                         <div class="view overlay hm-white-slight">
-                            <img src="<%= game.game.box.large%>" class="img-fluid" alt="">
-                            <a href="/gamepage/<%= game.game.name%>">
+                            <img src="{{game.game.box.large}}" class="img-fluid" alt="">
+                            <a href="/gamepage/{{game.game.name}}">
                                 <div class="mask"></div>
                             </a>
                         </div>
@@ -104,10 +94,10 @@
                         <!--Card content-->
                         <div class="card-block text-center">
                             <!--Title-->
-                            <h4 class="card-title gamename"><%= game.game.name%> </h4>
+                            <h4 class="card-title gamename">{{game.game.name}}</h4>
                             <hr>
                             <!--Text-->
-                            <p class="card-text gamecounts"><%= game.viewers%> Viewers | <%= game.channels%> Channels</p>
+                            <p class="card-text gamecounts">{{game.viewers}} Viewers | {{game.channels}} Channels</p>
                         </div>
                         <!--/.Card content-->
 
@@ -115,24 +105,24 @@
                     <!--/.Card-->
                 </div>
                 <!--First columnn-->
-                <% }); %>
 
             </div>
 
         </section>
         <!--/Section: Best features-->
+        <a class="btn btn-info btn-bookmark col-lg-12" ng-click="handleClick(true)">Load More</a>
     </div>
     <!--/ Main container-->
 
-
-    <%-include includes/footer.ejs%>
-
-
+    <div ng-include src="'views/includes/footer.html'"></div>
 
     <!-- SCRIPTS -->
 
     <!-- JQuery -->
     <script type="text/javascript" src="views/js/jquery-2.2.3.min.js"></script>
+
+    <!-- AngularJs CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="views/js/tether.min.js"></script>
@@ -145,11 +135,12 @@
 
     <script type="text/javascript" src="views/js/index.js"></script>
 
+    <script type="text/javascript" src="views/js/indexapp.js"></script>
+
     <!-- Animations init-->
     <script>
         new WOW().init();
     </script>
-
 
 </body>
 

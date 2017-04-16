@@ -4,11 +4,11 @@ var request = require('request');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var databaseURL = 'mongodb://hakim:leboss93@ds115110.mlab.com:15110/hakimlab';
-var ejs = require('ejs')
 var moment = require('moment');
+var path = require('path');
 
 
-app.locals.fromNow = function(date){
+/*app.locals.fromNow = function(date){
   return moment(date).fromNow();
 }
 
@@ -16,17 +16,16 @@ mongoose.connect(databaseURL, function(err) {
   if (err) { throw err; }
   else
   	console.log("connection to database : done");
-});
+});*/
 
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({
 	extended:true
 }));
 app.use(bodyParser.json());
-app.set('view engine', 'ejs');
 
 app.get('/', function(req, res){
-	var options = {
+	/*var options = {
   		url: 'https://api.twitch.tv/kraken/games/top?limit=12',
   		headers: {
   		'Client-ID': '7m12f7tzdcfgluzt537v3yo66j6lno',
@@ -38,13 +37,14 @@ app.get('/', function(req, res){
 			console.log(result.top);
 			res.render('index', {gamelist: result.top});
 		}
-	});
+	});*/
+	 res.sendFile(path.join(__dirname + '/views/index.html'));
 })
 
 app.get('/gamepage/:gamename', function(req, res){
-	var gamename = req.params.gamename;
+/*	var gamename = req.params.gamename;
 	var options = {
-  		url: 'https://api.twitch.tv/kraken/clips/top?limit=20&game=' + gamename,
+  		url: 'https://api.twitch.tv/kraken/clips/top?limit=5&game=' + gamename,
   		headers: {
   		'Client-ID': '7m12f7tzdcfgluzt537v3yo66j6lno',
   		'Accept': 'application/vnd.twitchtv.v4+json'}
@@ -61,7 +61,8 @@ app.get('/gamepage/:gamename', function(req, res){
 			});
 			res.render('gamepage', {clips: result.clips, urls: listofurls, name: gamename});
   		}
-	});
+	});*/
+	res.sendFile(path.join(__dirname + '/views/gamepage.html'));
 })
 
 app.post('/download', function(req, res){
