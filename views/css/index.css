@@ -71,5 +71,20 @@ color: #1C2331;
 
 .gamecounts
 {
-	font-size: 0.9rem;
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* For mobiles */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+	.mobile-gamebox 
+	{
+		width: 50%;
+	}
+	.gamename
+	{
+		font-size: 1.3rem;
+	}
+
 }

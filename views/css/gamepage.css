@@ -1,3 +1,8 @@
+body 
+{
+    color: black;
+}
+
 .iframeclip
 {
     height: 100%;
@@ -21,11 +26,6 @@
     white-space: nowrap;
     overflow: hidden;
     font-weight: bold;
-}
-
-body 
-{
-	color: black;
 }
 
 .jumbheader
@@ -66,4 +66,24 @@ body
 .clip-container
 {
     height: 340px;
+}
+
+/* For mobiles */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .clip-container
+    {
+        height: 65vw;
+    }
+    .thumb-play
+    {
+       top: 30vw; 
+    }
+}
+
+/* For Ipads */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    .thumb-play
+    {
+       top: 12vw; 
+    }
 }
