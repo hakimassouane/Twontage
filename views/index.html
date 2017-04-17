@@ -76,44 +76,16 @@
         <section id="best-features">
 
             <div class="row">
-                <div class="col-lg-3">
-                    <!--Card-->
-                    <div class="card wow fadeInUp gamebox">
-                        <!--Card image-->
-                        <div class="view overlay hm-white-slight">
-                            
-                            <a href="/gamepage/{{game.game.name}}">
-                                <img src="http://static-cdn.jtvnw.net/ttv-boxart/League%20of%20Legends-272x380.jpg" class="img-fluid game-image" alt="">
-                            </a>
-                        </div>
-                        <!--/.Card image-->
-
-                        <!--Card content-->
-                        <div class="card-block text-center">
-                            <!--Title-->
-                            <h4 class="card-title gamename">{{game.game.name}}</h4>
-                            <hr>
-                            <!--Text-->
-                            <p class="card-text gamecounts">{{game.viewers}} Viewers | {{game.channels}} Channels</p>
-                        </div>
-                        <!--/.Card content-->
-
-                    </div>
-                    <!--/.Card-->
-                </div>
-                <!--First columnn-->
 
                 <!--First columnn-->
                 <div class="col-lg-3" ng-repeat="game in listOfGames track by $index">
                     <!--Card-->
-                    <div class="card wow fadeInUp gamebox">
+                    <div class="gamebox">
                         <!--Card image-->
-                        <div class="view overlay hm-white-slight">
                             
                             <a href="/gamepage/{{game.game.name}}">
                                 <img src="{{game.game.box.large}}" class="img-fluid game-image" alt="">
                             </a>
-                        </div>
                         <!--/.Card image-->
 
                         <!--Card content-->

@@ -1,13 +1,15 @@
 var app = angular.module('gamepageApp', ['requestModule']);
 
 app.controller('clipListCtrl', function($scope, $location, requestFactory) {
-	var urlGameName = $location.absUrl().substring($location.absUrl().lastIndexOf("/") + 1);
-	$scope.gameName = urlGameName.replace(/%20/g, ' ');
-	init();
-	
+	angular.element(document).ready(function () {
+		init();
+	});
+
 	function init () {
+		$scope.urlGameName = $location.absUrl().substring($location.absUrl().lastIndexOf("/") + 1);
+		$scope.gameName = $scope.urlGameName.replace(/%20/g, ' ');
 		$scope.listOfClips = [];
-		makeRequest(urlGameName, '');
+		makeRequest($scope.urlGameName, '');
 	};
 
 	$scope.handleClick = function (isBtnPressed) {
@@ -32,7 +34,7 @@ app.controller('clipListCtrl', function($scope, $location, requestFactory) {
 	
 	function loadMoreOnClick()
 	{
-		makeRequest(urlGameName, cursor);
+		makeRequest($scope.urlGameName, cursor);
 	}
 
 
