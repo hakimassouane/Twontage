@@ -68,6 +68,11 @@ body
     height: 340px;
 }
 
+.clip-list-row
+{
+    display: block;
+}
+
 /* For mobiles */
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .clip-container
@@ -78,12 +83,31 @@ body
     {
        top: 30vw; 
     }
+    .button-row-100
+    {
+        width: 100%;
+    }
+    .clip-list-row
+    {
+        display: grid;
+        max-width: 105%;
+    }
 }
 
 /* For Ipads */
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
     .thumb-play
     {
-       top: 12vw; 
+        top: 21%;
+        left: 54%;
+    }
+    .button-row-100
+    {
+        width: 100%;
+    }
+    .clip-list-row
+    {
+        display: grid;
+        max-width: 105%;
     }
 }

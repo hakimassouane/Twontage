@@ -26,7 +26,7 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="http://localhost:3000/">
+            <a class="navbar-brand" href="/">
                 <strong>Twontage</strong>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav1">
@@ -51,7 +51,7 @@
 
 
  <!-- Main container-->
-    <div class="container">
+    <div class="container-fluid">
                 <div class="divider-new">
             <h2 class="h2-responsive wow fadeInDown">Clips</h2>
         </div>
@@ -79,9 +79,9 @@
             <div class="row">
 
                 <!--First columnn-->
-                <div class="col-lg-6 col-xs-1" ng-repeat="clip in listOfClips track by $index">
+                <div class="col-lg-4 col-sm-6 col-xs-6" ng-repeat="clip in listOfClips track by $index">
                     <!--Card-->
-                    <div class="card wow fadeInUp gamebox ">
+                    <div class="card wow fadeInUp gamebox">
                         <!--Card image-->
                         <div class="overlay hm-white-slight clip-container" data-clips>
                         </div>
@@ -93,10 +93,10 @@
 
                             <hr>
                             <!--Text-->
-                                <div class="call-to-action">
+                                <div class="call-to-action row clip-list-row">
                                     <!-- pass the whole object to the post request -->
-                                    <a class="btn btn-info btn-bookmark"  data-clipinfo="JSON.stringify(clip)" value="">Bookmark</a>
-                                    <a class="btn btn-default" href="{{clip.broadcaster.channel_url}}" target="_blank">Visit channel</a>
+                                    <a class="btn btn-info btn-bookmark button-row-100"  data-clipinfo="JSON.stringify(clip)" value="">Bookmark</a>
+                                    <a class="btn btn-default button-row-100" href="{{clip.broadcaster.channel_url}}" target="_blank">Visit channel</a>
                                 </div>
                             
                              <p class="card-text gamecounts">  
