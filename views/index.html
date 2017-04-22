@@ -80,7 +80,7 @@
                 <!--First columnn-->
                 <div class="col-lg-3 col-sm-4 col-xs-1 mobile-w-50" ng-repeat="game in listOfGames track by $index">
                     <!--Card-->
-                    <div class="card wow fadeInUp gamebox">
+                    <div class="card wow fadeInUp gamebox" data-wow-duration="0.5s">
                         <!--Card image-->
                             
                             <a href="/gamepage/{{game.game.name}}">
@@ -107,7 +107,7 @@
 
         </section>
         <!--/Section: Best features-->
-        <a class="btn btn-info fadeInUp btn-bookmark col-lg-12" ng-click="handleClick(true)">Load More</a>
+        <a class="btn btn-info wow fadeInUp btn-bookmark col-lg-12" ng-click="handleClick(true)">Load More</a>
     </div>
     <!--/ Main container-->
 

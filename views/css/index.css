@@ -78,7 +78,7 @@ color: #1C2331;
 
 /* For mobiles */
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-	.mobile-gamebox 
+	.mobile-w-50 
 	{
 		width: 50%;
 	}
