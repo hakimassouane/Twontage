@@ -1,26 +1,22 @@
-var app = angular.module('gamepageApp', ['requestModule']);
+var app = angular.module('userClipListApp', ['requestModule']);
 
-app.controller('clipListCtrl', function($scope, $location, requestFactory) {
+app.controller('userClipListCtrl', function($scope, $location, requestFactory) {
 	angular.element(document).ready(function () {
 		init();
 	});
 
 	function init () {
-		$scope.urlGameName = $location.absUrl().substring($location.absUrl().lastIndexOf("/") + 1);
-		$scope.gameName = $scope.urlGameName.replace(/%20/g, ' ');
 		$scope.listOfClips = [];
-		makeRequest($scope.urlGameName, '');
+		makeRequest();
 	};
 
-	function makeRequest(gameName, filters) {
-		var promise = requestFactory.getClipList(gameName, filters);
+	function makeRequest() {
+		var promise = requestFactory.getUserClipList();
 		promise.then(function(res) { 
 			console.log(res);
-			res.data.clips.forEach(function(element) {
+			res.data.forEach(function(element) {
   				$scope.listOfClips.push(element);
 			});
-			cursor = '&cursor=' + res.data._cursor;
-			console.log($scope.listOfClips);
 		},
 		function(errorPayload) {
 			console.log('failure loading request', errorPayload);
@@ -32,9 +28,9 @@ app.controller('clipListCtrl', function($scope, $location, requestFactory) {
 			loadMoreOnClick();
 	}
 
-	$scope.handleBookmarkClick = function (isBtnPressed, $element) {
+	$scope.handleDeleteClick = function (isBtnPressed, $element) {
 		if (isBtnPressed)
-			bookmarkClick($element);
+			deleteClick($element);
 	}
 	
 	function loadMoreOnClick()
@@ -43,11 +39,11 @@ app.controller('clipListCtrl', function($scope, $location, requestFactory) {
 		makeRequest($scope.urlGameName, cursor);
 	}
 
-	function bookmarkClick($element)
+	function deleteClick($element)
 	{
 		console.log($element);
 		var obj = angular.element($element.target).attr('data-clip');
-		var promise = requestFactory.putClipInDb(obj);
+		var promise = requestFactory.deleteClipInDb(obj);
 		promise.then(function(res) { 
 			console.log(res);
 		},

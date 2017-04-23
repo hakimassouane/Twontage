@@ -19,7 +19,7 @@
     
     
 </head>
-<body ng-app="gamepageApp" ng-controller="clipListCtrl">
+<body ng-app="userClipListApp" ng-controller="userClipListCtrl">
      <!--Navbar-->
     <nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar navbar-twontage">
         <div class="container">
@@ -44,33 +44,17 @@
 
     <div class="jumbotron jumbotron-fluid jumbotron-twontage text-center">
         <div class="container">
-            <h1 class="h1-responsive wow fadeInDown">{{gameName}}<!--<%= name %> --></h1>
-            <p class="wow fadeInDown">Watch clips from {{gameName}} and bookmark the ones you like !</p>
+            <h1 class="h1-responsive wow fadeInDown">My Clips</h1>
+            <p class="wow fadeInDown">Start Picking your clips to make your montage ! You can also delete the ones you don't like anymore</p>
         </div>
     </div>
 
-
  <!-- Main container-->
     <div class="container-fluid">
-        <div class="divider-new">
+                <div class="divider-new">
             <h2 class="h2-responsive wow fadeInDown">Clips</h2>
         </div>
         <section id="filters">
-            <!--<form class="form-inline col-md-4 col-md-offset-4">
-              <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
-              <select class="custom-select  mr-sm-2 " id="inlineFormCustomSelect">
-                <option selected>Choose...</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-              <label class="custom-control custom-checkbox mr-sm-2">
-                <input type="checkbox" class="custom-control-input">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">Remember my preference</span>
-              </label>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>-->
         </section>
 
         <!--Section: Best features-->
@@ -95,7 +79,7 @@
                             <!--Text-->
                                 <div class="call-to-action row clip-list-row">
                                     <!-- pass the whole object to the post request -->
-                                    <a ng-click="handleBookmarkClick(true, $event)" data-clip="{{clip}}"class="btn btn-info btn-bookmark button-row-100">Bookmark</a>
+                                    <a ng-click="handleDeleteClick(true, $event)" data-clip="{{clip}}"class="btn btn-danger btn-bookmark button-row-100">Delete</a>
                                     <a class="btn btn-default button-row-100" href="{{clip.broadcaster.channel_url}}" target="_blank">Visit channel</a>
                                 </div>
                             
@@ -121,7 +105,7 @@
         </section>
         <!--/Section: Best features-->
         <div>
-            <a class="btn btn-info text-center btn-bookmark col-lg-12" ng-click="handleLoadMoreOnClick(true)">Load More</a>
+            <a class="btn btn-info text-center btn-bookmark col-lg-12" ng-click="handleClick(true)">Load More</a>
         </div>
     </div>
     <!--/ Main container-->
@@ -144,13 +128,12 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="../views/js/mdb.min.js"></script>
 
-<script type="text/javascript" src="../views/js/gamepage.js"></script>
+<script type="text/javascript" src="../views/js/userclippageapp.js"></script>
 
 <script type="text/javascript" src="../../node_modules/moment/moment.js"></script>
 
 <script type="text/javascript" src="../views/js/requestmodule.js"></script>
 
-<script type="text/javascript" src="../views/js/gamepageapp.js"></script>
 
 <!-- Animations init-->
     <script>
