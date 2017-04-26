@@ -1,60 +1,80 @@
 var app = angular.module('userClipListApp', ['requestModule']);
 
-app.controller('userClipListCtrl', function($scope, $location, requestFactory) {
+app.controller('userClipListCtrl', function($scope, $location, $interval, requestFactory) {
 	angular.element(document).ready(function () {
 		init();
 	});
 
-	function init () {
+	function init() {
 		$scope.listOfClips = [];
 		makeRequest();
 	};
 
 	function makeRequest() {
-		var promise = requestFactory.getUserClipList();
-		promise.then(function(res) { 
+		requestFactory.getUserClipList()
+		.then(function(res) {
 			console.log(res);
 			res.data.forEach(function(element) {
   				$scope.listOfClips.push(element);
 			});
-		},
-		function(errorPayload) {
-			console.log('failure loading request', errorPayload);
-		});
+		}).catch(function(err){
+			console.log("error catched in makeRequest");
+		})
 	}
 
-	$scope.handleLoadMoreOnClick = function (isBtnPressed) {
+	$scope.handleLoadMoreOnClick = function(isBtnPressed) {
 		if (isBtnPressed)
 			loadMoreOnClick();
 	}
 
-	$scope.handleDeleteClick = function (isBtnPressed, $element) {
+	$scope.handleDeleteClick = function(isBtnPressed, $element) {
 		if (isBtnPressed)
 			deleteClick($element);
 	}
 	
-	function loadMoreOnClick()
-	{
-		console.log("wsh");
+	function loadMoreOnClick() {
 		makeRequest($scope.urlGameName, cursor);
 	}
 
-	function deleteClick($element)
-	{
-		console.log($element);
+	function deleteClick($element) {
 		var obj = angular.element($element.target).attr('data-clip');
-		var promise = requestFactory.deleteClipInDb(obj);
-		promise.then(function(res) { 
-			console.log(res);
-		},
-		function(errorPayload) {
-			console.log('failure loading request', errorPayload);
+		requestFactory.deleteClipInDb(obj)
+		.then(function(res) {
+			requestFactory.getUserClipList()
+			.then(function(res) {
+				$scope.listOfClips.length = 0;
+				res.data.forEach(function(element) {
+  					$scope.listOfClips.push(element);
+				});
+				// TODO : We use document until we find a better way to implement this 
+				document.getElementById('alert-delete').style.display = "block";
+				document.getElementById('alert-delete').innerHTML = 'You succesfully deleted the clip : <strong>'+ JSON.parse(obj).title + '</strong>';
+				countdown(2)
+			}).catch(function(err) {
+				console.log("error catched in getUserClipList : " + err);
+			});
+		}).catch(function(err) {
+			console.log("error catched in deleteClipInDb");
 		});
 	}
 
+	function countdown(counter) {
+		// TODO : fix the countdown method because if we launch it 
+		// multiple times it bugs without cleanrInterval(id)
+		clearInterval(id);
+		id = setInterval(function() {
+		    counter--;
+		    if(counter < 0) {
+		        clearInterval(id);
+		       	document.getElementById('alert-delete').style.display = "none";
+		        console.log("done");
+		    } 
+		}, 1000);
+	}
 
 });
 
+//Directive to avoid loading clips before clicking on thumbnail
 app.directive('clips', function(){
     return {
         template: '<i ng-if="!clip.show" ng-click="clip.show=!clip.show" class="fa fa-play thumb-play"></i>' + 
@@ -70,7 +90,7 @@ app.filter('trusted', ['$sce', function ($sce) {
     };
 }]);
 
-
+//Filter for date format under clips
 app.filter('timesince', function ($filter) {
   return function (input) {
   		return moment(input).fromNow();

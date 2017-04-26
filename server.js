@@ -3,8 +3,6 @@ var app = express();
 var request = require('request');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
-var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://hakim:leboss93@ds115110.mlab.com:15110/hakimlab';
 var path = require('path');
 
@@ -17,85 +15,69 @@ app.use(bodyParser.json());
 
 app.get('/', function(req, res){
 	 res.sendFile(path.join(__dirname + '/views/index.html'));
-})
+});
 
 app.get('/gamepage/:gamename', function(req, res){
 	res.sendFile(path.join(__dirname + '/views/gamepage.html'));
-})
+});
 
 app.get('/userclipspage', function(req, res){
 	res.sendFile(path.join(__dirname + '/views/userclippage.html'));
-})
+});
 
 app.get('/api/getbookmarkedclips', function(req, res){
 	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
 		db.collection('Clips').find().toArray()
     	.then(function(Items) {
-      		console.log(Items); // Use this to debug
       		res.setHeader('Content-Type', 'application/json');
+      		console.log(Items);
       		res.send(Items);
     	})
 	});
 });
 
 app.post('/api/bookmark', function (req, res) {
-	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
+	var database = MongoClient.connect(url);
+	database.then(function(db) {
 		tryToAddClip(db, req.body);
+		res.end();
 	});
-  	res.end();
-})
+});
 
 app.post('/api/delete', function (req, res) {
-	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
+	var database = MongoClient.connect(url);
+	database.then(function(db) {
 		tryToDelClip(db, req.body);
+		res.end();
 	});
-  	res.end();
-})
+});
 
 function tryToAddClip(db, clip) {
-	db.collection('Clips').find({"id":clip.id}).toArray(function(err, items) {
-		if (err) {
-			console.log("error ----- > ", err);
-		} 
-		else {
-			console.log(items.length);
-			if (items.length <= 0){
-				db.collection('Clips').insertOne(clip, function(err, result) {
-   					assert.equal(err, null);
-    				console.log("Inserted a clip in Db.");
-  				});
-			} else {
-				console.log('clip already exists')
-				db.close();
-			}
+	db.collection('Clips').find({ 'id': clip.id }).toArray()
+	.then(function(items) {
+		if (items.length <= 0){
+			db.collection('Clips').insertOne(clip, function(err, result) {
+    			console.log("Inserted a clip in Db.");
+  			});
 		}
-	});
+		db.close();
+    }).catch(function(err) {
+    	console.log("Couldn't add clip because of an error in db");
+    })
 }
 
 function tryToDelClip(db, clip) {
-	db.collection('Clips').find({"id":clip.id}).toArray(function(err, items) {
-		if (err) {
-			console.log("error ----- > ", err);
-		} 
-		else {
-			console.log(items.length);
-			if (items.length <= 0){
-				console.log('Clip Does not exist')
-				db.close();
-			} else {
-				db.collection('Clips').remove({"id":clip.id}, function(err, result) {
-   					assert.equal(err, null);
-    				console.log("Removed a clip in Db.");
-  				});
-			}
+	db.collection('Clips').find({ 'id': clip.id }).toArray().then(function(items) {
+		if (items.length > 0){
+			db.collection('Clips').remove({"id":clip.id}, function(err, result) {
+    			console.log("Removed a clip in Db.");
+  			});
 		}
-	});
+		db.close();
+    }).catch(function(err) {
+    	console.log("Couldn't add clip because of an error in db");
+    })
 }
-
-
 
 let server = app.listen(3000, function(){
 	console.log("App launched listening on port : 3000")

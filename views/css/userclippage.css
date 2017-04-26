@@ -1,0 +1,14 @@
+body 
+{
+    color: black;
+}
+
+#alert-delete
+{
+    text-align:center;
+    position:fixed; 
+    bottom: 0px;
+    width: 100%;
+    z-index:9999; 
+    border-radius:0px
+}

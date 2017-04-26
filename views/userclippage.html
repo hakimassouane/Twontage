@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="../views/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/views/css/userclippage.css">
     <link rel="stylesheet" href="/views/css/gamepage.css">
     <!-- Material Design Bootstrap -->
     <link href="../views/css/mdb.min.css" rel="stylesheet">
@@ -20,6 +21,8 @@
     
 </head>
 <body ng-app="userClipListApp" ng-controller="userClipListCtrl">
+    <div class="alert alert-success wow fadeInUp" id="alert-delete" role="alert" style="display: none;">
+    </div>
      <!--Navbar-->
     <nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar navbar-twontage">
         <div class="container">
@@ -35,7 +38,7 @@
                 <form class="form-inline waves-effect waves-light">
                     <a class="nav-link">Login <i class="fa fa-user" aria-hidden="true"></i></a>
                     <a class="nav-link">Sign up <i class="fa fa-sign-in" aria-hidden="true"></i></a>
-                     <a class="nav-link" href="/userclipspage">My Clips <i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                     <a class="nav-link" href="/userclipspage">My Clips <i class="fa fa-film" aria-hidden="true"></i></a>
                 </form>
             </div>
         </div>
@@ -44,6 +47,7 @@
 
     <div class="jumbotron jumbotron-fluid jumbotron-twontage text-center">
         <div class="container">
+
             <h1 class="h1-responsive wow fadeInDown">My Clips</h1>
             <p class="wow fadeInDown">Start Picking your clips to make your montage ! You can also delete the ones you don't like anymore</p>
         </div>
@@ -51,9 +55,11 @@
 
  <!-- Main container-->
     <div class="container-fluid">
-                <div class="divider-new">
+
+        <div class="divider-new">
             <h2 class="h2-responsive wow fadeInDown">Clips</h2>
         </div>
+
         <section id="filters">
         </section>
 
@@ -104,9 +110,7 @@
 
         </section>
         <!--/Section: Best features-->
-        <div>
-            <a class="btn btn-info text-center btn-bookmark col-lg-12" ng-click="handleClick(true)">Load More</a>
-        </div>
+
     </div>
     <!--/ Main container-->
 
@@ -139,4 +143,6 @@
     <script>
         new WOW().init();
     </script>
+
+
 </html>

@@ -39,24 +39,35 @@ app.controller('clipListCtrl', function($scope, $location, requestFactory) {
 	
 	function loadMoreOnClick()
 	{
-		console.log("wsh");
 		makeRequest($scope.urlGameName, cursor);
 	}
 
 	function bookmarkClick($element)
 	{
-		console.log($element);
 		var obj = angular.element($element.target).attr('data-clip');
-		var promise = requestFactory.putClipInDb(obj);
-		promise.then(function(res) { 
+		requestFactory.putClipInDb(obj)
+		.then(function(res){
 			console.log(res);
-		},
-		function(errorPayload) {
-			console.log('failure loading request', errorPayload);
+			document.getElementById('alert-delete').style.display = "block";
+			document.getElementById('alert-delete').innerHTML = 'You succesfully bookmarked the clip : <strong>'+ JSON.parse(obj).title + '</strong>';
+		}).catch(function(err){
+			console.log('Erorr in bookmarkClick', err);
 		});
 	}
 
-
+	function countdown(counter) {
+		// TODO : fix the countdown method because if we launch it 
+		// multiple times it bugs without cleanrInterval(id)
+		clearInterval(id);
+		id = setInterval(function() {
+		    counter--;
+		    if(counter < 0) {
+		        clearInterval(id);
+		       	document.getElementById('alert-delete').style.display = "none";
+		        console.log("done");
+		    } 
+		}, 1000);
+	}
 });
 
 app.directive('clips', function(){
