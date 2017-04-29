@@ -5,13 +5,16 @@ var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://hakim:leboss93@ds115110.mlab.com:15110/hakimlab';
 var path = require('path');
+var fs = require('fs');
+const download = require('download');
+var request = require("request");
+var cheerio = require("cheerio");
 
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({
 	extended:true
 }));
 app.use(bodyParser.json());
-
 
 app.get('/', function(req, res){
 	 res.sendFile(path.join(__dirname + '/views/index.html'));
@@ -57,6 +60,17 @@ function tryToAddClip(db, clip) {
 	.then(function(items) {
 		if (items.length <= 0){
 			db.collection('Clips').insertOne(clip, function(err, result) {
+				request({
+				  uri: 	clip.url,
+				}, function(error, response, body) {
+					const parsedHTML = cheerio.load(body);
+					var toParse = parsedHTML('script').last().get()[0].children[0].data.toString()
+					var videoURL = toParse.substring(toParse.indexOf(':"h') + 2, toParse.indexOf("mp4") + 3);
+					console.log(videoURL);
+					download(videoURL).then(data => {
+   						 fs.writeFileSync('test.mp4', data);
+					});
+				});
     			console.log("Inserted a clip in Db.");
   			});
 		}
